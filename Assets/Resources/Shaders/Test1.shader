@@ -2,6 +2,7 @@
 {
     Properties
     {
+        _BaseColor ("Base Color", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
@@ -25,20 +26,22 @@
             struct VertOut
             {
                 float4 vertex : SV_POSITION;
-                float4 color : COLOR0;
+                float4 normal : NORMAL;
             };
 
             VertOut vert (VertIn v)
             {
                 VertOut o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.color = v.normal;
+                o.normal = v.normal;
                 return o;
             }
 
+            fixed4 _BaseColor;
+
             fixed4 frag (VertOut i) : SV_Target
             {
-                fixed4 col = i.color;
+                fixed4 col = _BaseColor;
                 return col;
             }
             ENDCG
