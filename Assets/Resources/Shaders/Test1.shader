@@ -41,7 +41,9 @@
 
             fixed4 frag (VertOut i) : SV_Target
             {
-                fixed4 col = _BaseColor;
+                float4 invLightDir = mul(UNITY_MATRIX_M, _WorldSpaceLightPos0);
+                float power = dot(normalize(i.normal), invLightDir.xyz);
+                fixed4 col = _BaseColor * power;
                 return col;
             }
             ENDCG
